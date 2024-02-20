@@ -2,10 +2,11 @@ import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import {
-  deliverOptions,
+  deliveryOptions,
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
@@ -75,12 +76,13 @@ export function renderOrderSummary() {
       );
 
       container.remove();
+      renderPaymentSummary();
     });
   });
 
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
-    deliverOptions.forEach((deliveryOption) => {
+    deliveryOptions.forEach((deliveryOption) => {
       const today = dayjs();
       const deliveryDate = today.add(deliveryOption.deliveryDays, "days");
       const dateString = deliveryDate.format("dddd, MMMM D");
@@ -114,6 +116,7 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
