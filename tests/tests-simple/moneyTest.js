@@ -1,4 +1,4 @@
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from "../../scripts/utils/money.js";
 console.log("test suite: format currency");
 //group of related tests is a test suite
 console.log("converts cents into dollars");
